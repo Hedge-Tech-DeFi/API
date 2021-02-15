@@ -31,6 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// Rinkeby routes
+
 app.route('/rinkeby/proposal/:id/state').get((req, res) => {
   GovAlphaRinkebyContract.methods.state(req.params.id).call()
     .then((result) => {
@@ -103,6 +105,79 @@ app.route('/rinkeby/proposals/').get((req, res) => {
   });
 });
 
+// Mainnet routes
+
+app.route('/mainnet/proposal/:id/state').get((req, res) => {
+  GovAlphaMainnetContract.methods.state(req.params.id).call()
+    .then((result) => {
+      proposal = result;
+      return res.send(proposal);
+    })
+    .catch((error) => {
+      console.error('[rinkeby-proposal-state] error:', error);
+      return res.sendStatus(400);
+    });
+});
+
+app.route('/mainnet/proposal/:id').get((req, res) => {
+  GovAlphaMainnetContract.getPastEvents('ProposalCreated', {
+    filter: {}, // Using an array means OR: e.g. 20 or 23
+    fromBlock: 0,
+    toBlock: 'latest'
+  }, function(error, events){ 
+    console.log(events); 
+  })
+  .then(events => {
+    const proposals = events.map(function(events) {
+      returnValues = events.returnValues;
+      returnObj = {
+        title: "Proposal #" + returnValues.id,
+        id: returnValues.id,
+        proposer: returnValues.proposer,
+        startBlock: returnValues.startBlock,
+        endBlock: returnValues.endBlock,
+        description: returnValues.description,
+      }
+      return returnObj;
+    });
+    const proposal = proposals.filter(proposal => proposal.id === req.params.id);
+    return res.send(proposal[0]);
+  })
+  .catch((error) => {
+    console.error('[rinkeby-proposal-id] error:', error);
+    return res.sendStatus(400);
+  });
+});
+
+
+app.route('/mainnet/proposals/').get((req, res) => {
+  GovAlphaMainnetContract.getPastEvents('ProposalCreated', {
+    filter: {}, // Using an array means OR: e.g. 20 or 23
+    fromBlock: 0,
+    toBlock: 'latest'
+  }, function(error, events){ 
+    console.log(events); 
+  })
+  .then(events => {
+    const proposals = events.map(function(events) {
+      returnValues = events.returnValues;
+      returnObj = {
+        title: "Proposal #" + returnValues.id,
+        id: returnValues.id,
+        proposer: returnValues.proposer,
+        startBlock: returnValues.startBlock,
+        endBlock: returnValues.endBlock,
+        description: returnValues.description,
+      }
+      return returnObj;
+    });
+    return res.send(proposals);
+  })
+  .catch((error) => {
+    console.error('[rinkeby-proposals] error:', error);
+    return res.sendStatus(400);
+  });
+});
 
 
 app.listen(port, () => console.log(`API server running on port ${port}`));

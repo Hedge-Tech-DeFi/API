@@ -1,7 +1,7 @@
 {
   "walletPrivateKey": "2f479587800449bbafe5fe33fee893e879c90b82e2758037b1df7f5831824c4e",
   "GovAlphaRinkeby": "0xA464d1Bf7519E7a19748d71caE34ccDBc46c470B",
-  "GovAlphaMainnet": "",
+  "GovAlphaMainnet": "0x275c65eea05abd0d04db775e9626c4d1b3f4d937",
   "GovAlphaAbi": [
     {
       "inputs": [
