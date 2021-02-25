@@ -6,7 +6,7 @@ const config = require('./config.json');
 const walletPrivateKey = process.env.walletPrivateKey;
 
 const web3Rinkeby = new Web3('https://rinkeby.infura.io/v3/01d5d39c9b47480c929bbf0ba8796713');
-const web3Mainnet = new Web3('https://mainnet.infura.io/v3/01d5d39c9b47480c929bbf0ba8796713');
+const web3Mainnet = new Web3('https://bsc-dataseed1.binance.org:443');
 
 
 web3Rinkeby.eth.accounts.wallet.add(config.walletPrivateKey);
