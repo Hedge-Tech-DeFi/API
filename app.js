@@ -6,7 +6,8 @@ const config = require('./config.json');
 const walletPrivateKey = process.env.walletPrivateKey;
 
 const web3Rinkeby = new Web3('https://rinkeby.infura.io/v3/01d5d39c9b47480c929bbf0ba8796713');
-const web3Mainnet = new Web3('https://bsc-dataseed1.binance.org:443');
+const web3BSC = new Web3('https://bsc-dataseed1.binance.org:443');
+const web3Mainnet = new Web3("https://mainnet.infura.io/v3/01d5d39c9b47480c929bbf0ba8796713");
 
 
 web3Rinkeby.eth.accounts.wallet.add(config.walletPrivateKey);
@@ -23,7 +24,7 @@ const GovAlphaRinkebyContract = new web3Rinkeby.eth.Contract(GovAlphaAbi, GovAlp
 const VaultAbi = config.VaultAbi;
 
 const VaultAbiMainnet = config.VaultMainnet;
-const VaultAbiMainnetContract = new web3Mainnet.eth.Contract(VaultAbi, VaultAbiMainnet);
+const VaultAbiMainnetContract = new web3BSC.eth.Contract(VaultAbi, VaultAbiMainnet);
 
 const VaultAbiRinkeby = config.VaultRinkeby;
 const VaultAbiRinkebyContract = new web3Rinkeby.eth.Contract(VaultAbi, VaultAbiRinkeby);
